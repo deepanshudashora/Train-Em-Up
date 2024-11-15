@@ -1,4 +1,4 @@
-# Neural Network Training Application
+# Train'Em Up
 
 ## Overview
 This application provides an advanced, interactive platform to train and compare neural networks on widely used computer vision datasets. Users can select between MNIST (handwritten digits) and Fashion-MNIST datasets, configure multiple models with tailored hyperparameters, and monitor training progress and predictions in real-time using a user-friendly interface.

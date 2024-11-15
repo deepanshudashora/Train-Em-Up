@@ -43,7 +43,7 @@ This application provides an advanced, interactive platform to train and compare
   - Input channels progressively expand through convolutional layers:
     - `channels → channels*2 → channels*4`.
   - Balances efficient feature extraction with computational efficiency.
-- **Memory Optimization**:
+- **Future Enhancement (Memory Optimization)**:
   - Dynamically adjusts channel sizes to available memory.
   - Increases model capacity without exceeding memory limits.
 
@@ -51,8 +51,8 @@ This application provides an advanced, interactive platform to train and compare
 
 ### Advanced Memory Management
 - **Smart Batch Size Calculation**:
-  - Automatically determines the maximum batch size based on system memory usage (70% of available RAM).
-  - Ensures compatibility with valid power-of-2 sizes (e.g., 4, 8, 16, 32, etc.).
+  - Automatically determines the maximum batch size based on system memory usage (70% of available RAM on CPU).
+  - Ensures compatibility with valid power-of-2 batch sizes (e.g., 4, 8, 16, 32, etc.). 
 - **Training-Test Consistency**:
   - Dynamically aligns batch sizes between training and testing datasets.
 
@@ -67,12 +67,12 @@ This application provides an advanced, interactive platform to train and compare
 
 
 - **Dynamic Batch Adjustment**:
-  - Adjusts user-requested batch sizes to the nearest valid power-of-2 values.
-  - Maintains consistent batch sizes across training and testing phases.
+  - Adjusts user-requested batch sizes to the nearest valid power-of-2 values. (The most popular ones are 4, 8, 16, 32, 64, etc.)
 - **Gradient Accumulation**:
   - Enables large effective batch sizes by dividing them into smaller memory-friendly steps.
   - Automatically calculates accumulation steps using:
     - `accumulation_steps = ceil(user_batch_size / max_possible_batch_size)`.
+    - Accumulation steps are only calculated if the batch size entered by the user exceeds the 70% RAM limit.
 
 ---
 

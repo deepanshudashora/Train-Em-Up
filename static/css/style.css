@@ -1,0 +1,730 @@
+/* Base styles and fonts */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+:root {
+    --bg-primary: #0a0c10;
+    --bg-secondary: #121620;
+    --accent-primary: linear-gradient(135deg, #1a2a6c, #2a4858);
+    --accent-hover: linear-gradient(135deg, #141E30, #243B55);
+    --text-primary: #ffffff;
+    --text-secondary: #8b95a5;
+    --border-color: rgba(255, 255, 255, 0.08);
+    --success-color: #2ecc71;
+    --error-color: #e74c3c;
+    --card-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    --hover-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+}
+
+body {
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    font-family: 'Inter', sans-serif;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+/* Headers */
+h1, h2, h3 {
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 1.5rem;
+}
+
+h1 { font-size: 2.5rem; }
+h2 { font-size: 2rem; }
+h3 { font-size: 1.5rem; }
+
+/* Dataset Selection */
+.dataset-selection {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.dataset-card {
+    background: var(--bg-secondary);
+    padding: 2rem;
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.dataset-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--hover-shadow);
+    border-color: rgba(255, 255, 255, 0.15);
+}
+
+/* Model Configuration */
+.models-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.model-config {
+    background: var(--bg-secondary);
+    padding: 2rem;
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+}
+
+.param-group {
+    margin-bottom: 1.5rem;
+}
+
+.param-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: var(--text-secondary);
+    font-weight: 500;
+}
+
+.param-group input,
+.param-group select {
+    width: 100%;
+    padding: 0.75rem;
+    background: var(--bg-primary);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    color: var(--text-primary);
+    font-family: 'Inter', sans-serif;
+    transition: all 0.3s ease;
+}
+
+.param-group input:focus,
+.param-group select:focus {
+    border-color: #4a90e2;
+    box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.2);
+    outline: none;
+}
+
+/* Buttons */
+.start-training-btn,
+.prediction-btn,
+.get-predictions-btn {
+    background: var(--accent-primary);
+    color: var(--text-primary);
+    padding: 1rem 2rem;
+    border: none;
+    border-radius: 8px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 1rem;
+}
+
+.start-training-btn:hover,
+.prediction-btn:hover,
+.get-predictions-btn:hover {
+    background: var(--accent-hover);
+    transform: translateY(-2px);
+}
+
+/* Progress Tracking */
+.training-container {
+    background: var(--bg-secondary);
+    padding: 2rem;
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+    margin-bottom: 2rem;
+}
+
+.progress-bar-container {
+    background: var(--bg-primary);
+    border-radius: 8px;
+    overflow: hidden;
+    height: 8px;
+    margin: 1rem 0;
+}
+
+.progress-bar {
+    background: var(--accent-primary);
+    height: 100%;
+    transition: width 0.3s ease;
+}
+
+/* Charts */
+.charts-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 2rem;
+    margin: 2rem 0;
+}
+
+.chart {
+    background: var(--bg-secondary);
+    padding: 1.5rem;
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+    min-height: 400px;
+}
+
+/* Training Logs */
+.training-logs-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 2rem;
+}
+
+.model-logs {
+    background: var(--bg-secondary);
+    padding: 1.5rem;
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+}
+
+.log-content {
+    background: var(--bg-primary);
+    padding: 1rem;
+    border-radius: 8px;
+    height: 300px;
+    overflow-y: auto;
+    font-family: 'Monaco', monospace;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    border: 1px solid var(--border-color);
+}
+
+.epoch-log {
+    background: rgba(26, 42, 108, 0.05);
+    border-left: 3px solid #4a90e2;
+    margin: 10px 0;
+    padding: 12px;
+    border-radius: 6px;
+    transition: transform 0.2s ease;
+}
+
+.epoch-log:hover {
+    transform: translateX(4px);
+    background: rgba(26, 42, 108, 0.1);
+}
+
+.log-header {
+    color: var(--text-primary);
+    font-weight: 500;
+    margin-bottom: 8px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.log-section-header {
+    color: #4a90e2;
+    font-weight: 500;
+    margin: 8px 0 4px 0;
+    padding-left: 8px;
+    border-left: 2px solid #4a90e2;
+}
+
+.log-metrics {
+    color: var(--text-primary);
+    font-family: 'Monaco', monospace;
+    margin: 4px 0;
+    padding-left: 16px;
+}
+
+.log-info {
+    color: var(--text-secondary);
+    font-size: 0.9em;
+    margin: 4px 0;
+    padding-left: 16px;
+}
+
+.log-progress-bar {
+    background: var(--bg-primary);
+    height: 4px;
+    border-radius: 2px;
+    margin-top: 8px;
+    overflow: hidden;
+    border: 1px solid var(--border-color);
+}
+
+.log-progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #4a90e2, #63b3ed);
+    border-radius: 2px;
+    transition: width 0.3s ease;
+}
+
+/* Predictions */
+.prediction-card {
+    background: var(--bg-secondary);
+    padding: 1.5rem;
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+    margin: 1rem 0;
+}
+
+.prediction-card.correct-prediction {
+    border-left: 4px solid var(--success-color);
+}
+
+.prediction-card.incorrect-prediction {
+    border-left: 4px solid var(--error-color);
+}
+
+.confidence-bar {
+    background: var(--bg-primary);
+    height: 6px;
+    border-radius: 3px;
+    margin-top: 0.5rem;
+}
+
+.confidence-level {
+    background: linear-gradient(90deg, #4a90e2, #63b3ed);
+    height: 100%;
+    border-radius: 3px;
+    transition: width 0.3s ease;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg-primary);
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+/* Model Stats */
+.model-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.model-stats p {
+    background: var(--bg-primary);
+    padding: 1rem;
+    border-radius: 8px;
+    margin: 0;
+    border: 1px solid var(--border-color);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .container {
+        padding: 1rem;
+    }
+    
+    .models-container,
+    .charts-container,
+    .training-logs-container {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Enhanced Training Logs */
+.epoch-log {
+    background: rgba(26, 42, 108, 0.1);
+    border-left: 3px solid #4a90e2;
+    margin: 10px 0;
+    padding: 12px;
+    border-radius: 6px;
+}
+
+.log-header {
+    color: #ffffff;
+    font-weight: 500;
+    margin-bottom: 8px;
+}
+
+.log-metrics {
+    color: #4a90e2;
+    font-family: 'Monaco', monospace;
+    margin: 4px 0;
+}
+
+.log-info {
+    color: #8b95a5;
+    font-size: 0.9em;
+    margin: 4px 0;
+}
+
+/* Enhanced Charts */
+.chart {
+    background: var(--bg-secondary);
+    padding: 20px;
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Prediction Cards Enhancement */
+.prediction-card {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    background: var(--bg-secondary);
+    padding: 20px;
+    border-radius: 12px;
+    margin: 15px 0;
+    transition: transform 0.2s ease;
+}
+
+.prediction-card:hover {
+    transform: translateY(-2px);
+}
+
+.prediction-image {
+    width: 100px;
+    height: 100px;
+    object-fit: contain;
+    background: var(--bg-primary);
+    padding: 10px;
+    border-radius: 8px;
+}
+
+.prediction-details {
+    flex: 1;
+}
+
+.confidence-bar {
+    height: 6px;
+    background: var(--bg-primary);
+    border-radius: 3px;
+    overflow: hidden;
+    margin-top: 8px;
+}
+
+.confidence-level {
+    height: 100%;
+    background: linear-gradient(90deg, #4a90e2, #63b3ed);
+    border-radius: 3px;
+    transition: width 0.3s ease;
+}
+
+.correct-prediction .confidence-level {
+    background: linear-gradient(90deg, #2ecc71, #27ae60);
+}
+
+.incorrect-prediction .confidence-level {
+    background: linear-gradient(90deg, #e74c3c, #c0392b);
+}
+
+/* Add these to your existing CSS */
+
+.log-progress-bar {
+    background: var(--bg-primary);
+    height: 4px;
+    border-radius: 2px;
+    margin-top: 8px;
+    overflow: hidden;
+}
+
+.log-progress-fill {
+    height: 100%;
+    background: var(--accent-primary);
+    border-radius: 2px;
+    transition: width 0.3s ease;
+}
+
+.log-section-header {
+    color: var(--text-secondary);
+    font-weight: 500;
+    margin: 8px 0 4px 0;
+    padding-left: 8px;
+    border-left: 2px solid var(--text-secondary);
+}
+
+.log-metrics {
+    color: #4a90e2;
+    font-family: 'Monaco', monospace;
+    margin: 4px 0;
+    padding-left: 16px;
+}
+
+.epoch-log {
+    background: rgba(26, 42, 108, 0.1);
+    border-left: 3px solid #4a90e2;
+    margin: 10px 0;
+    padding: 12px;
+    border-radius: 6px;
+    transition: transform 0.2s ease;
+}
+
+.epoch-log:hover {
+    transform: translateX(4px);
+}
+
+.log-header {
+    color: #ffffff;
+    font-weight: 500;
+    margin-bottom: 8px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.log-info {
+    color: #8b95a5;
+    font-size: 0.9em;
+    margin: 4px 0;
+    padding-left: 16px;
+}
+
+/* Add these styles for the prediction page */
+.model-configs {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-bottom: 2rem;
+}
+
+.config-details {
+    background: var(--bg-primary);
+    padding: 1.5rem;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+}
+
+.config-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.config-item:last-child {
+    border-bottom: none;
+}
+
+.config-label {
+    color: var(--text-secondary);
+}
+
+.config-value {
+    color: var(--text-primary);
+    font-family: 'Monaco', monospace;
+}
+
+.prediction-controls {
+    background: var(--bg-secondary);
+    padding: 2rem;
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+    margin-bottom: 2rem;
+}
+
+.control-group {
+    display: flex;
+    gap: 2rem;
+    align-items: flex-end;
+}
+
+.input-group {
+    flex: 1;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: var(--text-secondary);
+}
+
+.input-group select,
+.input-group input {
+    width: 100%;
+    padding: 0.75rem;
+    background: var(--bg-primary);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    color: var(--text-primary);
+    font-family: 'Inter', sans-serif;
+}
+
+.prediction-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 2rem;
+}
+
+.prediction-section {
+    background: var(--bg-secondary);
+    padding: 1.5rem;
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+}
+
+.predictions-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.prediction-image-container {
+    background: var(--bg-primary);
+    padding: 1rem;
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.prediction-label,
+.prediction-true-label,
+.prediction-confidence {
+    margin: 0.5rem 0;
+}
+
+.prediction-confidence strong {
+    color: var(--text-primary);
+}
+
+/* Add these styles for the app introduction */
+.app-introduction {
+    margin-bottom: 3rem;
+    padding: 2rem;
+    background: var(--bg-secondary);
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+}
+
+.info-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+}
+
+.info-card {
+    background: var(--bg-primary);
+    padding: 1.5rem;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+}
+
+.info-card h3 {
+    color: #4a90e2;
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
+}
+
+.info-card ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.info-card li {
+    margin-bottom: 0.8rem;
+    padding-left: 1.5rem;
+    position: relative;
+    color: var(--text-secondary);
+}
+
+.info-card li::before {
+    content: "•";
+    color: #4a90e2;
+    position: absolute;
+    left: 0;
+    font-weight: bold;
+}
+
+/* Update these styles in your existing CSS */
+
+.main-title {
+    text-align: center;
+    margin-bottom: 2rem;
+    font-size: 2.5rem;
+    background: linear-gradient(135deg, #4a90e2, #63b3ed);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.app-introduction {
+    margin-bottom: 2rem;
+    padding: 1.5rem 2rem;
+    background: var(--bg-secondary);
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.app-introduction p {
+    margin: 1rem 0;
+    color: var(--text-secondary);
+    line-height: 1.6;
+}
+
+.app-introduction strong {
+    color: #4a90e2;
+    margin-right: 0.5rem;
+}
+
+.dataset-title {
+    text-align: center;
+    margin: 2rem 0;
+    color: var(--text-primary);
+    font-size: 1.8rem;
+}
+
+.dataset-selection {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+.dataset-card {
+    background: var(--bg-secondary);
+    padding: 1.5rem;
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.dataset-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--hover-shadow);
+    border-color: #4a90e2;
+}
+
+.dataset-card h3 {
+    color: #4a90e2;
+    margin-bottom: 1rem;
+    font-size: 1.4rem;
+}
+
+.dataset-card p {
+    color: var(--text-secondary);
+    line-height: 1.5;
+    margin: 0;
+}
+
+@media (max-width: 768px) {
+    .dataset-selection {
+        grid-template-columns: 1fr;
+    }
+    
+    .app-introduction {
+        margin: 1rem;
+        padding: 1rem;
+    }
+}

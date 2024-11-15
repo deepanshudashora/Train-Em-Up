@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Model Training App - Hyperparameters</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Configure Models</h1>
+        <div class="models-container">
+            <div class="model-config">
+                <h2>Model 1 Configuration</h2>
+                <form id="model1-form">
+                    <div class="param-group">
+                        <label>Number of Epochs:</label>
+                        <input type="number" name="epochs" value="5" min="1" max="10">
+                    </div>
+                    <div class="param-group">
+                        <label>Batch Size:</label>
+                        <input type="number" name="batch_size" value="32" min="1" max="512">
+                    </div>
+                    <div class="param-group">
+                        <label>Learning Rate:</label>
+                        <input type="number" name="learning_rate" value="0.001" step="0.0001">
+                    </div>
+                    <div class="param-group">
+                        <label>Optimizer:</label>
+                        <select name="optimizer">
+                            <option value="adam">Adam</option>
+                            <option value="sgd">SGD</option>
+                        </select>
+                    </div>
+                    <div class="param-group">
+                        <label>Channel Size:</label>
+                        <input type="number" name="channels" value="32" min="16" max="128">
+                    </div>
+                    <div class="param-group">
+                        <label>Dropout Rate:</label>
+                        <input type="number" name="dropout_rate" value="0.5" step="0.1" min="0" max="1">
+                    </div>
+                </form>
+            </div>
+            
+            <div class="model-config">
+                <h2>Model 2 Configuration</h2>
+                <form id="model2-form">
+                    <div class="param-group">
+                        <label>Number of Epochs:</label>
+                        <input type="number" name="epochs" value="5" min="1" max="10">
+                    </div>
+                    <div class="param-group">
+                        <label>Batch Size:</label>
+                        <input type="number" name="batch_size" value="64" min="1" max="512">
+                    </div>
+                    <div class="param-group">
+                        <label>Learning Rate:</label>
+                        <input type="number" name="learning_rate" value="0.01" step="0.0001">
+                    </div>
+                    <div class="param-group">
+                        <label>Optimizer:</label>
+                        <select name="optimizer">
+                            <option value="adam">Adam</option>
+                            <option value="sgd">SGD</option>
+                        </select>
+                    </div>
+                    <div class="param-group">
+                        <label>Channel Size:</label>
+                        <input type="number" name="channels" value="64" min="16" max="128">
+                    </div>
+                    <div class="param-group">
+                        <label>Dropout Rate:</label>
+                        <input type="number" name="dropout_rate" value="0.3" step="0.1" min="0" max="1">
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="button-container">
+            <button class="start-training-btn" onclick="startTraining()">Start Training</button>
+        </div>
+    </div>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html> 

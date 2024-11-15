@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Model Training App - Prediction</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Model Predictions</h1>
+        
+        <div class="model-configs">
+            <div class="model-config">
+                <h3>Model 1 Configuration</h3>
+                <div id="model1-config" class="config-details"></div>
+            </div>
+            <div class="model-config">
+                <h3>Model 2 Configuration</h3>
+                <div id="model2-config" class="config-details"></div>
+            </div>
+        </div>
+        
+        <div class="prediction-controls">
+            <h3>Select Images for Prediction</h3>
+            <div class="control-group">
+                <div class="input-group">
+                    <label>Dataset:</label>
+                    <select id="dataset-type">
+                        <option value="train">Training Set</option>
+                        <option value="test">Test Set</option>
+                    </select>
+                </div>
+                
+                <div class="input-group">
+                    <label>Number of Images:</label>
+                    <input type="number" id="num-images" value="5" min="1" max="20">
+                </div>
+                
+                <button class="get-predictions-btn" onclick="getPredictions()">Get Predictions</button>
+            </div>
+        </div>
+        
+        <div class="prediction-grid">
+            <div class="prediction-section">
+                <h3>Model 1 Predictions</h3>
+                <div id="model1-predictions" class="predictions-container"></div>
+            </div>
+            <div class="prediction-section">
+                <h3>Model 2 Predictions</h3>
+                <div id="model2-predictions" class="predictions-container"></div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const model1Config = JSON.parse(localStorage.getItem('model1_config') || '{}');
+            const model2Config = JSON.parse(localStorage.getItem('model2_config') || '{}');
+            
+            displayModelConfig('model1-config', model1Config);
+            displayModelConfig('model2-config', model2Config);
+        });
+        
+        function displayModelConfig(elementId, config) {
+            const container = document.getElementById(elementId);
+            const configItems = [
+                ['Epochs', 'epochs'],
+                ['Batch Size', 'batch_size'],
+                ['Learning Rate', 'learning_rate'],
+                ['Optimizer', 'optimizer'],
+                ['Channel Size', 'channels'],
+                ['Dropout Rate', 'dropout_rate']
+            ];
+            
+            let html = '';
+            configItems.forEach(([label, key]) => {
+                html += `
+                    <div class="config-item">
+                        <span class="config-label">${label}:</span>
+                        <span class="config-value">${config[key] || 'N/A'}</span>
+                    </div>
+                `;
+            });
+            container.innerHTML = html;
+        }
+        
+        function getPredictions() {
+            const datasetType = document.getElementById('dataset-type').value;
+            const numImages = document.getElementById('num-images').value;
+            
+            fetch('/get_predictions', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    dataset_type: datasetType,
+                    num_images: numImages
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                displayPredictions('model1-predictions', data, 'model1');
+                displayPredictions('model2-predictions', data, 'model2');
+            });
+        }
+        
+        function displayPredictions(containerId, predictions, modelKey) {
+            const container = document.getElementById(containerId);
+            let html = '';
+            
+            predictions.forEach((pred, idx) => {
+                const isCorrect = pred[modelKey].label === pred.true_label;
+                html += `
+                    <div class="prediction-card ${isCorrect ? 'correct-prediction' : 'incorrect-prediction'}">
+                        <div class="prediction-image-container">
+                            <img src="data:image/png;base64,${pred.image}" class="prediction-image">
+                        </div>
+                        <div class="prediction-details">
+                            <div class="prediction-label">
+                                <strong>Predicted:</strong> ${pred[modelKey].label}
+                            </div>
+                            <div class="prediction-true-label">
+                                <strong>True Label:</strong> ${pred.true_label}
+                            </div>
+                            <div class="prediction-confidence">
+                                <strong>Confidence:</strong> ${pred[modelKey].confidence.toFixed(2)}%
+                                <div class="confidence-bar">
+                                    <div class="confidence-level" style="width: ${pred[modelKey].confidence}%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            container.innerHTML = html;
+        }
+    </script>
+</body>
+</html> 

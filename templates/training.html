@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Model Training App - Training</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>Model Training Progress</h1>
+        
+        <div class="training-container">
+            <div class="model-progress">
+                <h2>Model 1</h2>
+                <div class="progress-bar-container">
+                    <div id="progress-bar-1" class="progress-bar"></div>
+                </div>
+                <div id="model1-stats" class="model-stats">
+                    <p>Epoch: <span id="model1-epoch">0</span>/<span id="model1-total-epochs">5</span></p>
+                    <p>Progress: <span id="model1-progress">0</span>%</p>
+                    <p>Current Loss: <span id="model1-loss">0.000</span></p>
+                    <p>Current Accuracy: <span id="model1-accuracy">0.00</span>%</p>
+                    <p>Batch Size: <span id="model1-batch-size">0</span></p>
+                </div>
+            </div>
+            
+            <div class="model-progress">
+                <h2>Model 2</h2>
+                <div class="progress-bar-container">
+                    <div id="progress-bar-2" class="progress-bar"></div>
+                </div>
+                <div id="model2-stats" class="model-stats">
+                    <p>Epoch: <span id="model2-epoch">0</span>/<span id="model2-total-epochs">5</span></p>
+                    <p>Progress: <span id="model2-progress">0</span>%</p>
+                    <p>Current Loss: <span id="model2-loss">0.000</span></p>
+                    <p>Current Accuracy: <span id="model2-accuracy">0.00</span>%</p>
+                    <p>Batch Size: <span id="model2-batch-size">0</span></p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="charts-container">
+            <div class="chart">
+                <div id="accuracy-chart"></div>
+            </div>
+            <div class="chart">
+                <div id="loss-chart"></div>
+            </div>
+        </div>
+        
+        <div class="training-logs-container" style="display: flex; justify-content: space-between; width: 100%;">
+            <div class="model-logs" style="width: calc(50% - 10px);">
+                <h3>Model 1 Training Logs</h3>
+                <pre id="log-container-1" class="log-content" style="white-space: pre; font-family: monospace; background: #f5f5f5; padding: 15px; border-radius: 8px; overflow-y: auto; max-height: 400px;"></pre>
+            </div>
+            <div class="model-logs" style="width: calc(50% - 10px);">
+                <h3>Model 2 Training Logs</h3>
+                <pre id="log-container-2" class="log-content" style="white-space: pre; font-family: monospace; background: #f5f5f5; padding: 15px; border-radius: 8px; overflow-y: auto; max-height: 400px;"></pre>
+            </div>
+        </div>
+    </div>
+    <div id="prediction-button-container"></div>
+    <script>
+        function updateCharts(data) {
+            // Prepare data for accuracy chart
+            const accuracyData = [{
+                name: 'Model 1 Training',
+                y: data.model1?.accuracy || [],
+                type: 'scatter',
+                mode: 'lines+markers'
+            }, {
+                name: 'Model 1 Testing',
+                y: data.model1?.test_accuracy || [],
+                type: 'scatter',
+                mode: 'lines+markers'
+            }, {
+                name: 'Model 2 Training',
+                y: data.model2?.accuracy || [],
+                type: 'scatter',
+                mode: 'lines+markers'
+            }, {
+                name: 'Model 2 Testing',
+                y: data.model2?.test_accuracy || [],
+                type: 'scatter',
+                mode: 'lines+markers'
+            }];
+
+            // Prepare data for loss chart
+            const lossData = [{
+                name: 'Model 1 Training',
+                y: data.model1?.loss || [],
+                type: 'scatter',
+                mode: 'lines+markers'
+            }, {
+                name: 'Model 1 Testing',
+                y: data.model1?.test_loss || [],
+                type: 'scatter',
+                mode: 'lines+markers'
+            }, {
+                name: 'Model 2 Training',
+                y: data.model2?.loss || [],
+                type: 'scatter',
+                mode: 'lines+markers'
+            }, {
+                name: 'Model 2 Testing',
+                y: data.model2?.test_loss || [],
+                type: 'scatter',
+                mode: 'lines+markers'
+            }];
+
+            // Update accuracy chart
+            Plotly.newPlot('accuracy-chart', accuracyData, {
+                title: 'Accuracy over Epochs',
+                xaxis: { title: 'Epoch' },
+                yaxis: { title: 'Accuracy (%)' }
+            });
+
+            // Update loss chart
+            Plotly.newPlot('loss-chart', lossData, {
+                title: 'Loss over Epochs',
+                xaxis: { title: 'Epoch' },
+                yaxis: { title: 'Loss' }
+            });
+        }
+
+        function updateTrainingLogs() {
+            fetch('/get_training_status')
+                .then(response => response.json())
+                .then(data => {
+                    // Update logs for both models
+                    if (data.model1?.log_messages) {
+                        document.getElementById('log-container-1').textContent = 
+                            data.model1.log_messages.join('\n');
+                    }
+                    if (data.model2?.log_messages) {
+                        document.getElementById('log-container-2').textContent = 
+                            data.model2.log_messages.join('\n');
+                    }
+                    
+                    // Update charts with all accumulated data
+                    updateCharts(data);
+                })
+                .catch(error => console.error('Error updating training logs:', error));
+        }
+
+        // Start updates when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize empty charts
+            updateCharts({
+                model1: { accuracy: [], loss: [], test_accuracy: [], test_loss: [] },
+                model2: { accuracy: [], loss: [], test_accuracy: [], test_loss: [] }
+            });
+            
+            // Update every second
+            setInterval(updateTrainingLogs, 1000);
+        });
+    </script>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html> 

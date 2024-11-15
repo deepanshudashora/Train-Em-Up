@@ -8,7 +8,10 @@ This application provides an advanced, interactive platform to train and compare
 ## Features
 
 ### Dataset Selection
-<img src="images/home_page.png" alt="MNIST" style="display: block; margin: 20px auto; width: 80%;">
+
+<p align="center">
+  <img src="images/home_page.png" alt="Alt text">
+</p>
 
 - **Supported Datasets**:
   - **MNIST**: Classic dataset of handwritten digits (0-9).
@@ -21,7 +24,10 @@ This application provides an advanced, interactive platform to train and compare
 ---
 
 ### Hyperparameter Configuration
-<img src="images/hyperparamter.png" alt="Hyperparameter Configuration" style="display: block; margin: 20px auto; width: 80%;">
+
+<p align="center">
+  <img src="images/hyperparamter.png" alt="Alt text">
+</p>
 
 - Users can independently configure two models with:
   - **Network Architecture**:
@@ -53,10 +59,15 @@ This application provides an advanced, interactive platform to train and compare
 ---
 
 ### Batch Processing System
-<img src="images/training_page.png" alt="Batch Processing System" style="display: block; margin: 20px auto; width: 80%;">
+
+<p align="center">
+  <img src="images/training_page.png" alt="Alt text">
+</p>
+
+
 
 - **Dynamic Batch Adjustment**:
-  - Adjusts user-requested batch sizes to nearest valid power-of-2 values.
+  - Adjusts user-requested batch sizes to the nearest valid power-of-2 values.
   - Maintains consistent batch sizes across training and testing phases.
 - **Gradient Accumulation**:
   - Enables large effective batch sizes by dividing them into smaller memory-friendly steps.
@@ -66,7 +77,11 @@ This application provides an advanced, interactive platform to train and compare
 ---
 
 ### Prediction Interface
-<img src="images/predictions.png" alt="Prediction Interface" style="display: block; margin: 20px auto; width: 80%;">
+
+<p align="center">
+  <img src="images/predictions.png" alt="Alt text">
+</p>
+
 
 - **Interactive Predictions**:
   - Predict multiple images from training or test datasets.
@@ -115,7 +130,7 @@ If the desired batch size exceeds available memory:
 
 ## Usage Example
 
-Here’s how to compute optimal batch size and accumulation steps for a training session:
+Here’s how to compute the optimal batch size and accumulation steps for a training session:
 
 ```python
 train_dataset = ...  # Load your training dataset
